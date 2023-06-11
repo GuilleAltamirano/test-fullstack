@@ -1,0 +1,26 @@
+.nav-bottom {
+    background-color: rgba(255, 255, 255, 0.5);
+    max-width: 15%;
+    max-height: 7%;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    position: fixed;
+    bottom: 0;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}
+
+
+.nav-bottom img {
+    width: 17%;
+    height: 17%;
+    padding: 4%;
+}
+
+@media (max-width: 426px) {
+    .nav-bottom {
+        max-width: 100%;
+        max-height: 20%;
+    }
+}

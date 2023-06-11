@@ -1,0 +1,14 @@
+.button-component {
+    background-color: #F24405;
+    border-radius: 25px;
+    font-size: 150%;
+    height: 60px;
+}
+
+.button-component:hover{
+    background-color: #F27405;
+}
+.line-separator {
+    width: 100%;
+    border: 1px solid #707070;
+}
