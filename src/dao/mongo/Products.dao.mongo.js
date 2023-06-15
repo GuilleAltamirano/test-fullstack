@@ -12,15 +12,18 @@ export class ProductsDaoMongo {
         return this.products.find().lean()
     }
 
-    async paginate ({ page, limit, category, status, sort }) {
+    async paginate ({ page, limit, category, sort }) {
         const filter = {}
         
         if (category) filter.category = category
-        if (status) filter.status = status
 
         return this.products.paginate(filter, {page, limit, sort, lean: true})
     }
 
+    async distinct (filter) {
+        return this.products.distinct(filter)
+    }
+    
     async post (product) {
         return this.products.create(product)
     }

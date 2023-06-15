@@ -14,8 +14,8 @@ const schema = Joi.object({
     put: (schema) => schema,
 })
 
-export const productsValidation = (type) => {
-    return (req, res, next) => {
+export const productsValidation = async (type) => {
+    return async (req, res, next) => {
         try {
             const typeSchema = schema.tailor(type).validate(req.body)
             if (typeSchema.error) throw new ApiError(`Query invalid`, 400)

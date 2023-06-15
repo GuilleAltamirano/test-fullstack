@@ -6,7 +6,7 @@ const schemaMessage = Joi.object({
     message: Joi.string().min(1).required()
 })
 
-export const messagesValidation = (req, res, next) => {
+export const messagesValidation = async (req, res, next) => {
     try {
         const typeSchema = schemaMessage.validate(req.body)
         if (typeSchema.error) throw new ApiError(`User or password invalid`, 400)

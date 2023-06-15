@@ -7,7 +7,7 @@ import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, JWT_SECRET_KEY } from "../env/v
 
 export const generateToken = async (user) => {return jwt.sign({user}, JWT_SECRET_KEY, {expiresIn: "1h"})}
 
-export const passportConfig = () => {
+export const passportConfig = async () => {
     passport.use('jwt', new Strategy({
         jwtFromRequest: ExtractJwt.fromExtractors([cookieExtractor]),
         secretOrKey: JWT_SECRET_KEY

@@ -13,8 +13,8 @@ const schemaEmail = Joi.object({
     code: Joi.string().alphanum()
 })
 
-export const sessionsValidation = (type) => {
-    return (req, res, next) => {
+export const sessionsValidation =  async (type) => {
+    return async (req, res, next) => {
         try {
             const typeSchema = schemaLogin.tailor(type).validate(req.body)
             if (typeSchema.error) throw new ApiError(`Query invalid`, 400)
@@ -23,7 +23,7 @@ export const sessionsValidation = (type) => {
     };
 };
 
-export const emailsValidation = (req, res, next) => {
+export const emailsValidation = async (req, res, next) => {
     try {
         const typeSchema = schemaEmail.validate(req.body)
         if (typeSchema.error) throw new ApiError(`Code invalid`, 400)

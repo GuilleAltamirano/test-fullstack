@@ -24,15 +24,15 @@ class CartsRouter extends Routers {
     }
 
     async init(){
-        this.get('/',['ADMIN'], cartsValidation('paginate'),getCartsController)
+        this.get('/',['ADMIN'], await cartsValidation('paginate'),getCartsController)
         this.get('/:cid',['ADMIN'], getCartByIdController)
 
         this.post('/',['ADMIN'], postCarts)
         this.post('/:cid/products/:pid',['USER'], postProdInCartController)
         this.post('/:cid/purchase', ['USER'], postPurchaseController)
 
-        this.put('/:cid',['USER'], cartsValidation('put'),putCartController)
-        this.put('/:cid/products/:pid', ['USER'], cartsValidation('putQty'),putQuantityProds)
+        this.put('/:cid',['USER'], await cartsValidation('put'),putCartController)
+        this.put('/:cid/products/:pid', ['USER'], await cartsValidation('putQty'),putQuantityProds)
         
         this.delete('/:cid/products/:pid', ['USER'], delProdInCart)
         this.delete('/:cid', ['USER'], putCartController)

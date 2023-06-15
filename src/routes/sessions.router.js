@@ -12,15 +12,15 @@ class SessionsRouter extends Routers {
     async init(){
         this.get('/current', ['USER', 'ADMIN'], async (req, res) => res.jsonSuccess(req.user))
         
-        this.post('/login', ['PUBLIC'], sessionsValidation('login'), loginController)
-        this.post('/forgot-password', ['PUBLIC'], sessionsValidation('forgot'), forgotPasswordController)
+        this.post('/login', ['PUBLIC'], await sessionsValidation('login'), loginController)
+        this.post('/forgot-password', ['PUBLIC'], await sessionsValidation('forgot'), forgotPasswordController)
         this.post('/register', ['PUBLIC'], postUsersController)
         this.post('/verification', ['PUBLIC'], emailsValidation, emailsValidationController)
         this.post('/logout', ['USER', 'ADMIN'], async(req, res) => res.clearCookie('cookieToken').redirectPage('/login'))
         
         this.get('/auth/google', ['PUBLIC'],passport.authenticate('google', { session: false }))
         this.get('/auth/google/callback', ['PUBLIC'],passport.authenticate('google', 
-        {session: false,failureRedirect: '/auth/google/failure',successRedirect: '/products'}))
+        {session: false,failureRedirect: '/auth/google/failure',successRedirect: 'http://localhost:3000/'}))
         
         this.get('/auth/google/failure', ['PUBLIC'], async (req, res) => res.jsonSuccess('Error en google'))
     }

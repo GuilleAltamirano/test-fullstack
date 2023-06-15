@@ -1,8 +1,6 @@
 import { Router } from "express"
 import passport from "passport"
-import cors from 'cors'
 import { ApiError } from "../errors/Api.error.js"
-import { WHITE_LIST } from "../env/vars.env.js"
 
 export default class Routers {
     constructor () {
@@ -15,7 +13,6 @@ export default class Routers {
     }
     //-----------------------------------------------------------------------------------------------------------------
     async init (){
-        this.router.use(await this.corsOptions())
     }
     //-----------------------------------------------------------------------------------------------------------------
     get(path, policies, ...callbacks){
@@ -40,15 +37,15 @@ export default class Routers {
     handlePolicies = policies => async (req, res, next) => {
         try {
             passport.authenticate('jwt', function (err, user, info) {
-            if (err) return next(err)
-            if (!user && (req.path !== '/login' && req.path !== '/register' && req.path !== '/register/verification' && req.path !== '/auth/google' && req.path !== '/auth/google/callback')) return res.redirect('/login')
-            if (user && (req.path === '/login' || req.path === '/register')) return res.redirect('/')
-            req.user = user
+                if (err) return next(err)
+                if (!user && (req.path !== '/login' && req.path !== '/register' && req.path !== '/register/verification' && req.path !== '/auth/google' && req.path !== '/auth/google/callback')) return res.redirect('/login')
+                if (user && (req.path === '/login' || req.path === '/register')) return res.redirect('/')
+                req.user = user
 
-            if (policies[0] === 'PUBLIC') return next()
-            if (!policies.includes(user.user.role)) throw new ApiError('No permission', 401)
-            
-            next()
+                if (policies[0] === 'PUBLIC') return next()
+                if (!policies.includes(user.user.role)) throw new ApiError('No permission', 401)
+                
+                next()
             })(req, res, next)
         }catch (err) {next(err)}
     }
@@ -71,12 +68,5 @@ export default class Routers {
             }).redirect(304, '/validation')
             next()
         } catch (err) {next(err)}
-    }
-
-    async corsOptions() {
-        return cors({
-            origin: WHITE_LIST,
-            allowedHeaders: ['Content-Type', 'Authorization']
-        });
     }
 }

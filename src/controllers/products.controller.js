@@ -1,11 +1,10 @@
 import { ApiError } from "../errors/Api.error.js"
-import { productServices } from "../services/products.service.js"
+import { productServices } from "../services/Products.service.js"
 
 export const getProductsController = async (req, res, next) => {
     try {
-        const { page=1, limit=10, category, status, sort } = req.query
-
-        const payload = await productServices.paginate({ page, limit, category, status, sort })
+        const { page=1, limit=10, category, sort } = req.query
+        const payload = await productServices.paginate({ page, limit, category, sort })
 
         res.jsonSuccess(payload)
     } catch (err) {next(err)}

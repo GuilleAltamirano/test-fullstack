@@ -5,15 +5,22 @@ import { ApiError } from "../errors/Api.error.js";
 
 class ProductsServices {
     async paginate (queryParams) {
+        const arrayPage = []
         let {prevLink, nextLink} = '#'
+        const allCategories = await productsDao.distinct('category')
+        const allProvider = await productsDao.distinct('title')
 
-        const { page, limit, category, status, sort } = queryParams
-        const { docs,totalPages,hasPrevPage,prevPage,hasNextPage,nextPage} = await productsDao.paginate({page, limit, category, status, sort})
+        const { page, limit, category, sort } = queryParams
+        const { docs,totalPages,hasPrevPage,prevPage,hasNextPage,nextPage} = await productsDao.paginate({page, limit, category, sort})
 
         if (hasPrevPage) prevLink = `/api/products/?page=${prevPage}`
         if (hasNextPage) nextLink = `/api/products/?page=${nextPage}`
+        //for navigation button
+        for (let i = 1; i <= totalPages; i++) {
+            arrayPage.push(i)
+        }
 
-        return { docs, totalPages, hasPrevPage, prevPage, hasNextPage, nextPage, prevLink, nextLink }
+        return { docs, allCategories, allProvider, arrayPage, hasPrevPage, prevPage, hasNextPage, nextPage, prevLink, nextLink }
     }
 
     async get (filter) {

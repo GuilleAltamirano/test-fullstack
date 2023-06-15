@@ -8,7 +8,6 @@ import { isValidPassword } from "../utils/bcrypt.js"
 class SessionsServices {
     async login (data) {
         const { email, password } = data
-
         if (email === EMAIL_ADMIN && password === PASSWORD_ADMIN) return new SessionsDto('admin')
         const existUser = await usersDao.get({email})
         if (!existUser) throw new ApiError(`User or password invalid`, 400)

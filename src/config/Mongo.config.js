@@ -1,7 +1,7 @@
 import { connect } from "mongoose"
 import { URL, ACCESS, SERVER, PARAMS } from "../env/vars.env.js"
 
-export const mongoConfig = async () => {MongoSingleton.getInstance()}
+export const mongoConfig = async () => {await MongoSingleton.getInstance()}
 
 class MongoSingleton {
     static #instance
@@ -11,7 +11,7 @@ class MongoSingleton {
         }
     }
 
-    static getInstance(){
+    static async getInstance(){
         if (this.#instance){
             console.info('it is already connected')
             return this.#instance

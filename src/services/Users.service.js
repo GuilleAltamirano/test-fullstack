@@ -11,7 +11,7 @@ class UsersServices {
         if ((email === EMAIL_ADMIN) || existUser.length > 0) throw new ApiError('user existing', 400)
 
         const cart = await cartsDao.post()
-        password = createHash(password)
+        password = await createHash(password)
         const newUser = await usersDao.post(new UsersDto({first_name, last_name, email, age, password, cart: cart._id}))
         
         return {newUser}

@@ -21,8 +21,8 @@ const schemaPutQty = Joi.object({
     quantity: Joi.number().min(1)
 })
 
-export const cartsValidation = (type) => {
-    return (req, res, next) => {
+export const cartsValidation = async (type) => {
+    return async (req, res, next) => {
         try {
             if (type === 'paginate'){
                 const typeSchema = schemaPaginate.validate(req.query)

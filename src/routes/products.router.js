@@ -24,9 +24,9 @@ class ProductsRouter extends Routers {
                 this.get('/',['PUBLIC'], getProductsController)
                 this.get('/:pid',['PUBLIC'], getProductsByIdController)
 
-                this.post('/',['ADMIN'], productsValidation('post'), postProductsController)
+                this.post('/',['ADMIN'], await productsValidation('post'), postProductsController)
 
-                this.put('/:pid',['ADMIN'], productsValidation('put'), putProductsController)
+                this.put('/:pid',['ADMIN'], await productsValidation('put'), putProductsController)
 
                 this.delete('/:pid',['ADMIN'], deleteProductsController)
         }
